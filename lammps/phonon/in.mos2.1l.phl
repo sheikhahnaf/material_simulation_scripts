@@ -1,0 +1,22 @@
+# 3D copper block simulation
+boundary     p p p
+units        metal
+atom_style   atomic
+
+
+read_data	mos2x2.pos
+mass            1 95.94
+mass            2 32.066
+
+
+
+pair_style sw 
+
+
+# SW for layer 1
+pair_coeff      * * mos216.sw Mo S 
+
+dump            1 all custom 1 dump_new.minimization id type x y z
+min_style	cg
+minimize	0.0 1.0e-8 1000000 1000000
+print "Done!"
