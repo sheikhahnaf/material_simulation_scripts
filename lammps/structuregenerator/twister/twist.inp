@@ -1,0 +1,25 @@
+a1:
+0.5 0.8660254 0.0
+a2:
+-0.5 0.8660254 0.0
+a3:
+0.0 0.0 1.0
+
+angle:
+0.0607550175432
+
+celldm1, celldm2, celldm3: (bohr)
+3.148621 3.148621 35.534473883846
+
+translate_z: (bohr)
+5.97946086263966
+
+Superlattice1: (m,n)
+9 10
+
+
+Superlattice2: (p,q)
+-10 19
+
+Plot_lattice:
+True
