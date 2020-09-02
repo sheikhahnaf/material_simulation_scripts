@@ -1,0 +1,68 @@
+#1 general
+units		metal
+dimension	3
+atom_style      atomic
+neighbor        0.3 bin
+
+#2 structure
+boundary	p p p
+read_data	mos2.dat
+mass            1 32.066
+mass            2 95.94
+mass            3 32.066
+mass            4 32.066
+mass            5 95.94
+mass            6 32.066
+
+
+
+#4 potentials
+pair_style      hybrid/overlay sw sw lj/cut 10.0 &
+kolmogorov/crespi/z 14.0  kolmogorov/crespi/z 14.0 kolmogorov/crespi/z 14.0 kolmogorov/crespi/z 14.0 
+
+
+# SW for layer 1
+pair_coeff      * *  sw 1 mos216.sw S Mo S NULL NULL NULL 
+# SW for layer 2
+pair_coeff      * *  sw 2 mos216.sw NULL NULL NULL S Mo S
+# Set arbitrary interactions - 0, before overlaying with KC
+pair_coeff * * lj/cut 0.0 3.4
+
+#------------------------------------------
+# S layer1: 1, 4, 7, 10=3
+# Mo layer1: 2, 5, 8, 11=2
+# S layer1: 3, 6, 9, 12=1
+# S layer2: 15, 18, 21, 24=4
+# Mo layer2: 14, 17, 20, 23=5
+# S layer2: 13, 16, 19, 22=6
+
+#------------------------------------------
+# S-S KC interactions.
+#------------------------------------------
+
+# KC between LAYER 3 and LAYER 4
+pair_coeff 3 4 kolmogorov/crespi/z 1 ILP.KC NULL NULL S S NULL NULL 
+
+#------------------------------------------
+# S-Mo KC interactions.
+#------------------------------------------
+
+# KC between LAYER 2 and LAYER 4
+pair_coeff 2 4 kolmogorov/crespi/z 2  ILP.KC NULL Mo NULL S NULL NULL
+# KC between LAYER 3 and LAYER 5
+pair_coeff 3 5 kolmogorov/crespi/z 3  ILP.KC NULL NULL S NULL Mo NULL 
+
+
+#------------------------------------------
+# Mo-Mo KC interactions.
+#------------------------------------------
+# Mo layer1: 2, 5, 8, 11 = 2
+# Mo layer2: 14, 17, 20, 23 = 5
+
+# KC between LAYER 2 and LAYER 5
+pair_coeff 2 5 kolmogorov/crespi/z 4  ILP.KC NULL Mo NULL NULL Mo NULL 
+# Relax atom positions
+dump            1 all custom 1 dump_new.minimization id type x y z
+min_style	cg
+minimize	0.0 1.0e-8 1000000 1000000
+print "Done!"
