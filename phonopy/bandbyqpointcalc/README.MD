@@ -1,1 +1,1 @@
-This directory contains files to calculate bands at specific q points directly from LAMMPS script using phonoLAMMPS,phonopy & seekpath. 
+This directory contains files written by me to calculate bands at specific q points directly from LAMMPS script using phonoLAMMPS,phonopy & seekpat plus files to generate qpoint.yaml to use with "PhononUnfolding" fortran pkg. 
