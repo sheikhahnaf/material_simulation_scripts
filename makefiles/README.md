@@ -1,1 +1,1 @@
-!!Makefiles tha I need modified for my desktop for various programs.
+!!Makefiles that I  modified for my workstation of various programs.
