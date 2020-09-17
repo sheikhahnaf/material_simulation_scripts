@@ -4,11 +4,13 @@ import time
 
 from pydmd import HODMD
 
+x=int(input("predicted timestep-\n"))
 
-
+z=int(input("data cutoff-\n"))
+b = slice(0,z)
 A=np.loadtxt('dmd.txt',delimiter=",")
 B=A.T
-C=B[:,0:3000]
+C=B[:,b]
 original=C
 
 print(C.shape)
@@ -24,11 +26,12 @@ plt.plot(hodmd.original_timesteps, original[0,:], '-', label='original function'
 plt.plot(hodmd.dmd_timesteps, hodmd.reconstructed_data[0].real, '--', label='DMD output')
 plt.legend()
 plt.show()
-hodmd.dmd_time['tend'] = 4000
-
+hodmd.dmd_time['tend'] = x
+y=x+1
+a = slice(0,y)
 fig = plt.figure(figsize=(15, 5))
 plt.plot(hodmd.original_timesteps, C[0,:], '.', label='snapshots')
-plt.plot(hodmd.dmd_timesteps, B[0,0:4001], '-', label='original function')
+plt.plot(hodmd.dmd_timesteps, B[0,a], '-', label='original function')
 plt.plot(hodmd.dmd_timesteps, hodmd.reconstructed_data[0].real, '--', label='DMD output')
 plt.legend()
 plt.show()
